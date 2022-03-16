@@ -2,6 +2,9 @@ package ntnu.idatt2104.madlads.nodeServerAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class NodeServerApiApplication {
@@ -10,4 +13,15 @@ public class NodeServerApiApplication {
 		SpringApplication.run(NodeServerApiApplication.class, args);
 	}
 
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/putNode")
+						.allowedMethods("GET", "POST")
+						.allowedOrigins("http://localhost:8080");
+			}
+		};
+	}
 }

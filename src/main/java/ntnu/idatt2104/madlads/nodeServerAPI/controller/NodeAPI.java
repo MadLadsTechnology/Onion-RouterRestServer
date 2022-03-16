@@ -48,19 +48,24 @@ public class NodeAPI {
         return objectNode;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
-    @RequestMapping(value="/putNode", method = RequestMethod.POST)
-    public void putNode(@RequestBody ObjectNode payload) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-        byte[] bytePubkey  = Base64.getDecoder().decode(payload.get("publickey").asText());
-        KeyFactory factory = KeyFactory.getInstance("ECDSA", "BC");
-        PublicKey publicKey = factory.generatePublic(new X509EncodedKeySpec(bytePubkey));
+    @PostMapping ("/putNode")
+    public void putNode(@RequestBody ObjectNode payload) throws NoSuchAlgorithmException, InvalidKeySpecException {
+
+        byte[] bytePubkey  = Base64.getDecoder().decode(payload.get("publicKey").asText());
+
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytePubkey);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey pubKey = keyFactory.generatePublic(keySpec);
+
         String[] splitString = payload.get("address").asText().split(":");
-        nodeList.addNode(publicKey, new Node(Integer.parseInt(splitString[1]), splitString[0]));
-        logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + publicKey.toString());
+
+        nodeList.addNode(pubKey, new Node(Integer.parseInt(splitString[1]), splitString[0]));
+
+        logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + pubKey.toString());
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
-    @RequestMapping(value="/getAllNodes", method= RequestMethod.GET)
+    @RequestMapping(value="/getAddress", method= RequestMethod.GET)
     public String getAddressOfSpecifiedNode(@RequestParam String payload) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
         byte[] bytePubkey  = Base64.getDecoder().decode(payload);
         KeyFactory factory = KeyFactory.getInstance("ECDSA", "BC");
@@ -68,4 +73,6 @@ public class NodeAPI {
 
         return nodeList.getAddressOfSpesifiedNode(publicKey);
     }
+
+
 }

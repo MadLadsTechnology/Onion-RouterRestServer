@@ -12,6 +12,7 @@ public class NodeList {
     }
 
     public NodeList() {
+        listOfAllNodes = new HashMap<>();
     }
 
     public HashMap<PublicKey, Node> getListOfAllNodes() {
@@ -26,7 +27,7 @@ public class NodeList {
     }
 
     public boolean addNode(PublicKey publicKey, Node node){
-        if (!(listOfAllNodes.get(publicKey) ==null)) {
+        if (listOfAllNodes.get(publicKey) ==null) {
             listOfAllNodes.put(publicKey, node);
             return true;
         }else return false;

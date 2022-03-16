@@ -20,4 +20,10 @@ public class Node {
     public String getAddress() {
         return address;
     }
+
+
+    @Override
+    public String toString() {
+        return "{" + "\"port:\"" + port + "\", \"address:\"" + address + "\"}";
+    }
 }

@@ -69,7 +69,6 @@ public class NodeAPI {
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAddress", method= RequestMethod.GET)
     public String getAddressOfSpecifiedNode(@RequestParam String payload){
-        logger.info(payload);
         String address = nodeList.getAddressOfSpecifiedNode(payload);
         if(address.equals("")){
             logger.info("the given request could not be found");
@@ -85,7 +84,7 @@ public class NodeAPI {
         if(nodeList.removeNode(payload)){
             logger.info("Removed node with publicKey: " + payload);
         }else{
-            logger.info("Spesified node does not exist: " + payload);
+            logger.info("Specified node does not exist: " + payload);
         }
     }
 

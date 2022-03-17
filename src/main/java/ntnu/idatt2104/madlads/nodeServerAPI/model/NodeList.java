@@ -5,9 +5,9 @@ import java.util.*;
 
 public class NodeList {
 
-    private HashMap<PublicKey, Node> listOfAllNodes;
+    private HashMap<String, Node> listOfAllNodes;
 
-    public NodeList(HashMap<PublicKey, Node> listOfAllNodes) {
+    public NodeList(HashMap<String, Node> listOfAllNodes) {
         this.listOfAllNodes = listOfAllNodes;
     }
 
@@ -15,18 +15,18 @@ public class NodeList {
         listOfAllNodes = new HashMap<>();
     }
 
-    public HashMap<PublicKey, Node> getListOfAllNodes() {
+    public HashMap<String, Node> getListOfAllNodes() {
         return listOfAllNodes;
     }
 
-    public String getAddressOfSpesifiedNode(PublicKey key){
+    public String getAddressOfSpecifiedNode(String key){
         Node node;
-        if (!((node = listOfAllNodes.get(key)) ==null)){
+        if ((node = listOfAllNodes.get(key)) != null){
             return node.getAddress()+":"+node.getPort();
         }return null;
     }
 
-    public boolean addNode(PublicKey publicKey, Node node){
+    public boolean addNode(String publicKey, Node node){
         if (listOfAllNodes.get(publicKey) ==null) {
             listOfAllNodes.put(publicKey, node);
             return true;
@@ -34,12 +34,13 @@ public class NodeList {
     }
 
     public boolean removeNode(PublicKey publicKey){
-        if (!(listOfAllNodes.get(publicKey) ==null)) {
+        if (listOfAllNodes.get(publicKey) !=null) {
             listOfAllNodes.remove(publicKey);
             return true;
         }else return false;
     }
-
+/*
+    //TODO: change publicKey to string
     public Map<PublicKey, Node> getCirciut(int maxAmountOfNodes){
         Map<PublicKey,Node> nodesToBeSent= new HashMap<>();
         if (listOfAllNodes.size()>maxAmountOfNodes){
@@ -61,5 +62,5 @@ public class NodeList {
             }
         }
         return nodesToBeSent;
-    }
+    }*/
 }

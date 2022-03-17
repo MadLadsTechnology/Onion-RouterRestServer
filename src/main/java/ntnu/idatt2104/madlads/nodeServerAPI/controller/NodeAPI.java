@@ -33,9 +33,9 @@ public class NodeAPI {
     public ObjectNode getAllNodes(){
         ObjectNode objectNode = mapperBuilder.createObjectNode();
 
-        HashMap<PublicKey, Node> list = nodeList.getListOfAllNodes();
-        ArrayList<PublicKey> listOfAllKeys = new ArrayList<>(list.keySet());
-        for (PublicKey key: listOfAllKeys) {
+        HashMap<String, Node> list = nodeList.getListOfAllNodes();
+        ArrayList<String> listOfAllKeys = new ArrayList<>(list.keySet());
+        for (String key: listOfAllKeys) {
             String strKey= key.toString();
             Node node = list.get(key);
             objectNode.put("publicKey", strKey );
@@ -49,13 +49,9 @@ public class NodeAPI {
     }
 
     @PostMapping ("/putNode")
-    public void putNode(@RequestBody ObjectNode payload) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public void putNode(@RequestBody ObjectNode payload) {
 
-        byte[] bytePubkey  = Base64.getDecoder().decode(payload.get("publicKey").asText());
-
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(bytePubkey);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        PublicKey pubKey = keyFactory.generatePublic(keySpec);
+        String pubKey  = payload.get("publicKey").asText();
 
         String[] splitString = payload.get("address").asText().split(":");
 
@@ -66,12 +62,8 @@ public class NodeAPI {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAddress", method= RequestMethod.GET)
-    public String getAddressOfSpecifiedNode(@RequestParam String payload) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
-        byte[] bytePubkey  = Base64.getDecoder().decode(payload);
-        KeyFactory factory = KeyFactory.getInstance("ECDSA", "BC");
-        PublicKey publicKey = factory.generatePublic(new X509EncodedKeySpec(bytePubkey));
-
-        return nodeList.getAddressOfSpesifiedNode(publicKey);
+    public String getAddressOfSpecifiedNode(@RequestParam String payload){
+        return nodeList.getAddressOfSpecifiedNode(payload);
     }
 
 

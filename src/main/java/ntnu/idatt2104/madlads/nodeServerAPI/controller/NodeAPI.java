@@ -70,7 +70,13 @@ public class NodeAPI {
     @RequestMapping(value="/getAddress", method= RequestMethod.GET)
     public String getAddressOfSpecifiedNode(@RequestParam String payload){
         logger.info(payload);
-        return nodeList.getAddressOfSpecifiedNode(payload);
+        String address = nodeList.getAddressOfSpecifiedNode(payload);
+        if(address.equals("")){
+            logger.info("the given request could not be found");
+        }else {
+            logger.info("Address returned: " + address);
+        }
+        return address;
     }
 
     @CrossOrigin(origins = "http://localhost:8080")

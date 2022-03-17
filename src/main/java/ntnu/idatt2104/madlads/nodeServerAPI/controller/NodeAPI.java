@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import ntnu.idatt2104.madlads.nodeServerAPI.model.Node;
 import ntnu.idatt2104.madlads.nodeServerAPI.model.NodeList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +28,30 @@ public class NodeAPI {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAllNodes", method= RequestMethod.GET)
-    public ArrayNode getAllNodes(){
-        ObjectNode objectNode = mapperBuilder.createObjectNode();
+    public String getAllNodes() throws JSONException {
 
         HashMap<String, Node> list = nodeList.getListOfAllNodes();
         ArrayList<String> listOfAllKeys = new ArrayList<>(list.keySet());
-        ArrayNode array = objectNode.putArray("list");
-        for (String key: listOfAllKeys) {
-            JsonNode jsonNode = mapperBuilder.valueToTree(list.get(key));
-            array.add(jsonNode);
 
-            //"publickey" : "adsadssadkjjfasdfs"
-            //"address" : "192.168.1.232:8080"
+        JSONArray array = new JSONArray();
+
+
+        for (String key: listOfAllKeys) {
+            Node node = list.get(key);
+
+            JSONObject jo = new JSONObject();
+            jo.put("port", node.getPort());
+            jo.put("ip", node.getAddress());
+            jo.put("publicKey", key);
+
+            array.put(jo);
+
         }
+        JSONObject mainObj = new JSONObject();
+        mainObj.put("nodes", array);
+
         logger.info("List of all nodes sent. Length of list: " + list.size());
-        return array;
+        return mainObj.toString();
     }
 
     @PostMapping ("/putNode")
@@ -51,12 +63,13 @@ public class NodeAPI {
 
         nodeList.addNode(pubKey, new Node(Integer.parseInt(splitString[1]), splitString[0]));
 
-        logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + pubKey.toString());
+        logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + pubKey);
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAddress", method= RequestMethod.GET)
     public String getAddressOfSpecifiedNode(@RequestParam String payload){
+        logger.info(payload);
         return nodeList.getAddressOfSpecifiedNode(payload);
     }
 

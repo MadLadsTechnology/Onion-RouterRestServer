@@ -33,7 +33,7 @@ public class NodeList {
         }else return false;
     }
 
-    public boolean removeNode(PublicKey publicKey){
+    public boolean removeNode(String publicKey){
         if (listOfAllNodes.get(publicKey) !=null) {
             listOfAllNodes.remove(publicKey);
             return true;

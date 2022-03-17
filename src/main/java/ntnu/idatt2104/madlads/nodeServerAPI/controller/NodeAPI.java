@@ -1,6 +1,8 @@
 package ntnu.idatt2104.madlads.nodeServerAPI.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import ntnu.idatt2104.madlads.nodeServerAPI.model.Node;
 import ntnu.idatt2104.madlads.nodeServerAPI.model.NodeList;
@@ -9,14 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 
 @RestController
@@ -30,22 +25,21 @@ public class NodeAPI {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAllNodes", method= RequestMethod.GET)
-    public ObjectNode getAllNodes(){
+    public ArrayNode getAllNodes(){
         ObjectNode objectNode = mapperBuilder.createObjectNode();
 
         HashMap<String, Node> list = nodeList.getListOfAllNodes();
         ArrayList<String> listOfAllKeys = new ArrayList<>(list.keySet());
+        ArrayNode array = objectNode.putArray("list");
         for (String key: listOfAllKeys) {
-            String strKey= key.toString();
-            Node node = list.get(key);
-            objectNode.put("publicKey", strKey );
-            objectNode.put("adress", node.getAddress()+":"+node.getPort());
+            JsonNode jsonNode = mapperBuilder.valueToTree(list.get(key));
+            array.add(jsonNode);
 
             //"publickey" : "adsadssadkjjfasdfs"
             //"address" : "192.168.1.232:8080"
         }
         logger.info("List of all nodes sent. Length of list: " + list.size());
-        return objectNode;
+        return array;
     }
 
     @PostMapping ("/putNode")
@@ -64,6 +58,16 @@ public class NodeAPI {
     @RequestMapping(value="/getAddress", method= RequestMethod.GET)
     public String getAddressOfSpecifiedNode(@RequestParam String payload){
         return nodeList.getAddressOfSpecifiedNode(payload);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(value="/deleteNode", method=RequestMethod.DELETE)
+    public void deleteNode(@RequestParam String payload){
+        if(nodeList.removeNode(payload)){
+            logger.info("Removed node with publicKey: " + payload);
+        }else{
+            logger.info("Spesified node does not exist: " + payload);
+        }
     }
 
 

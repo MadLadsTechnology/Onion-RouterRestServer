@@ -44,7 +44,6 @@ public class NodeAPI {
             jo.put("publicKey", key);
 
             array.put(jo);
-
         }
         JSONObject mainObj = new JSONObject();
         mainObj.put("nodes", array);
@@ -60,9 +59,11 @@ public class NodeAPI {
 
         String[] splitString = payload.get("address").asText().split(":");
 
-        nodeList.addNode(pubKey, new Node(Integer.parseInt(splitString[1]), splitString[0]));
-
-        logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + pubKey);
+        if (nodeList.addNode(pubKey, new Node(Integer.parseInt(splitString[1]), splitString[0]))){
+            logger.info("Added node with address: " + splitString[1] +":"+splitString[0] +"\nand public key: " + pubKey);
+        }else{
+            logger.info("Node with address" + splitString[1] +":"+splitString[0] +"Already exists");
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
@@ -86,6 +87,4 @@ public class NodeAPI {
             logger.info("Specified node does not exist: " + payload);
         }
     }
-
-
 }

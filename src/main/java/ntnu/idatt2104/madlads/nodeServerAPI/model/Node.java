@@ -1,5 +1,7 @@
 package ntnu.idatt2104.madlads.nodeServerAPI.model;
 
+import java.util.Objects;
+
 public class Node {
     private int port;
     private String address;
@@ -19,6 +21,18 @@ public class Node {
         return address;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return port == node.port && Objects.equals(address, node.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port, address);
+    }
 
     @Override
     public String toString() {

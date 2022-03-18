@@ -35,7 +35,6 @@ public class NodeAPI {
 
         JSONArray array = new JSONArray();
 
-
         for (String key: listOfAllKeys) {
             Node node = list.get(key);
 
@@ -67,7 +66,7 @@ public class NodeAPI {
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
-    @RequestMapping(value="/getAddress", method= RequestMethod.GET)
+    @GetMapping(value="/getAddress")
     public String getAddressOfSpecifiedNode(@RequestParam String payload){
         String address = nodeList.getAddressOfSpecifiedNode(payload);
         if(address.equals("")){

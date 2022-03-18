@@ -1,11 +1,13 @@
 package ntnu.idatt2104.madlads.nodeServerAPI.model;
 
-import java.security.PublicKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class NodeList {
 
     private HashMap<String, Node> listOfAllNodes;
+    Logger logger = LoggerFactory.getLogger(NodeList.class);
 
     public NodeList(HashMap<String, Node> listOfAllNodes) {
         this.listOfAllNodes = listOfAllNodes;
@@ -27,10 +29,15 @@ public class NodeList {
     }
 
     public boolean addNode(String publicKey, Node node){
-        if (listOfAllNodes.get(publicKey) ==null) {
+        if (listOfAllNodes.size()==0){
             listOfAllNodes.put(publicKey, node);
             return true;
-        }else return false;
+        }else {
+            if (Objects.equals(listOfAllNodes.get(publicKey), null)){
+                listOfAllNodes.put(publicKey, node);
+                return true;
+            }else return false;
+        }
     }
 
     public boolean removeNode(String publicKey){
@@ -39,28 +46,4 @@ public class NodeList {
             return true;
         }else return false;
     }
-/*
-    //TODO: change publicKey to string
-    public Map<PublicKey, Node> getCirciut(int maxAmountOfNodes){
-        Map<PublicKey,Node> nodesToBeSent= new HashMap<>();
-        if (listOfAllNodes.size()>maxAmountOfNodes){
-            throw new IllegalArgumentException("Not enough nodes present to fulfill request");
-        }else{
-            Random rand = new Random();
-            int min = 3;
-            int numberOfNodes = (int)Math.floor(Math.random()*(maxAmountOfNodes-min+1)+min);
-            ArrayList<Node> nodes = (ArrayList<Node>) listOfAllNodes.values();
-            ArrayList<PublicKey> listOfAllKeys = new ArrayList<>(listOfAllNodes.keySet());
-
-            for (int successfullAdds = 0; successfullAdds < numberOfNodes;) {
-                int randomInt = (int)Math.floor(Math.random()*(listOfAllNodes.size()+1));
-                PublicKey key;
-                if ((key = listOfAllKeys.get(randomInt)) != null){
-                    successfullAdds+=1;
-                    nodesToBeSent.put(key,listOfAllNodes.get(key));
-                }
-            }
-        }
-        return nodesToBeSent;
-    }*/
 }

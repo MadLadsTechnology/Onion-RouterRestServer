@@ -61,7 +61,7 @@ public class NodeAPI {
         if (nodeList.addNode(node)){
             logger.info("Added node with address: " + node);
         }else{
-            logger.info("Node with address" + node +"Already exists");
+            logger.info("Node with address" + node +" already exists");
         }
     }
 
@@ -81,5 +81,11 @@ public class NodeAPI {
         }else{
             logger.info("Specified node does not exist: " + node);
         }
+    }
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(value="/deleteAllNodes", method=RequestMethod.DELETE)
+    public void deleteAllNodes(){
+        nodeList.removeAllNodes();
+        logger.info("Removing all nodes");
     }
 }

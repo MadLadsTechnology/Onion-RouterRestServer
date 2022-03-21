@@ -27,5 +27,5 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Run Tests
-        run: surefire:test -f pom.xml
+        run: mvn surefire:test -f pom.xml
     

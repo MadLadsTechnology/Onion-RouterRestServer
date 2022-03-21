@@ -14,9 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @SpringBootTest
@@ -38,9 +40,9 @@ class NodeServerApiApplicationTests {
 		JSON_DATA = apiGETRequest("http://localhost:8080/api/getAllNodes");
 
 		fillNodes();
-		HashMap<String, Node> listOfAllNodes = nodes.getListOfAllNodes();
+		ArrayList<Node> listOfAllNodes = nodes.getListOfAllNodes();
 		Assert.assertEquals(2, listOfAllNodes.size());
-		Assert.assertEquals(listOfAllNodes.get("YOU WERE THE CHOSEN ONE! It was said that you would destroy the Sith, not join them, bring balance to the force, not leave it in darkness").getPort(),1234);
+
 	}
 
 	public static void apiPOSTNode(String url, String publicKey, String address) throws Exception {
@@ -104,6 +106,6 @@ class NodeServerApiApplicationTests {
 		System.out.println(node.get("port"));
 		int port = Integer.parseInt(String.valueOf((long) node.get("port")));
 
-		nodes.addNode(publicKey ,new Node(port , host));
+		nodes.addNode(new Node(port , host));
 	}
 }

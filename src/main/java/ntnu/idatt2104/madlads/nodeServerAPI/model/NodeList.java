@@ -6,43 +6,37 @@ import java.util.*;
 
 public class NodeList {
 
-    private HashMap<String, Node> listOfAllNodes;
+    private ArrayList<Node> listOfAllNodes;
     Logger logger = LoggerFactory.getLogger(NodeList.class);
 
-    public NodeList(HashMap<String, Node> listOfAllNodes) {
+    public NodeList(ArrayList<Node> listOfAllNodes) {
         this.listOfAllNodes = listOfAllNodes;
     }
 
     public NodeList() {
-        listOfAllNodes = new HashMap<>();
+        listOfAllNodes = new ArrayList<>();
     }
 
-    public HashMap<String, Node> getListOfAllNodes() {
+    public ArrayList<Node> getListOfAllNodes() {
         return listOfAllNodes;
     }
 
-    public String getAddressOfSpecifiedNode(String key){
-        Node node;
-        if ((node = listOfAllNodes.get(key)) != null){
-            return node.getAddress()+":"+node.getPort();
-        }return null;
-    }
-
-    public boolean addNode(String publicKey, Node node){
+    public boolean addNode(Node node){
         if (listOfAllNodes.size()==0){
-            listOfAllNodes.put(publicKey, node);
+            listOfAllNodes.add(node);
             return true;
         }else {
-            if (Objects.equals(listOfAllNodes.get(publicKey), null)){
-                listOfAllNodes.put(publicKey, node);
+            if (!listOfAllNodes.contains(node)){
+                listOfAllNodes.add(node);
                 return true;
             }else return false;
         }
     }
 
-    public boolean removeNode(String publicKey){
-        if (listOfAllNodes.get(publicKey) !=null) {
-            listOfAllNodes.remove(publicKey);
+    public boolean removeNode(String payload){
+        Node node = new Node(payload);
+        if (listOfAllNodes.contains(node)) {
+            listOfAllNodes.remove(node);
             return true;
         }else return false;
     }

@@ -3,13 +3,19 @@ package ntnu.idatt2104.madlads.nodeServerAPI.model;
 import java.util.Objects;
 
 public class Node {
-    private int port;
-    private String address;
+    private final int port;
+    private final String address;
 
 
     public Node(int port, String address) {
         this.port = port;
         this.address = address;
+    }
+
+    public Node (String payload){
+        String[] splitString = payload.split(":");
+        this.port= Integer.parseInt(splitString[1]);
+        this.address=splitString[0];
     }
 
 
@@ -36,6 +42,6 @@ public class Node {
 
     @Override
     public String toString() {
-        return "{" + "\"port:\"" + port + "\", \"address:\"" + address + "\"}";
+        return address + ":" + port;
     }
 }

@@ -51,4 +51,8 @@ public class NodeList {
             return true;
         }else return false;
     }
+
+    public void removeAllNodes(){
+        listOfAllNodes = new ArrayList<>();
+    }
 }

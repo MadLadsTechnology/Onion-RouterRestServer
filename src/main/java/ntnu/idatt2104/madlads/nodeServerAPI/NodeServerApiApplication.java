@@ -19,7 +19,7 @@ public class NodeServerApiApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/putNode")
-						.allowedMethods("GET", "POST")
+						.allowedMethods("GET", "POST", "DELETE")
 						.allowedOrigins("http://localhost:8080");
 			}
 		};

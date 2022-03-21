@@ -33,8 +33,7 @@ public class NodeList {
         }
     }
 
-    public boolean removeNode(String payload){
-        Node node = new Node(payload);
+    public boolean removeNode(Node node){
         if (listOfAllNodes.contains(node)) {
             listOfAllNodes.remove(node);
             return true;

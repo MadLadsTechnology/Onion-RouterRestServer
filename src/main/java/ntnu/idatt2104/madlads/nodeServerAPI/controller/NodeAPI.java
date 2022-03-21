@@ -55,11 +55,14 @@ public class NodeAPI {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/deleteNode", method=RequestMethod.DELETE)
-    public void deleteNode(@RequestParam String payload){
-        if(nodeList.removeNode(payload)){
-            logger.info("Removed node with publicKey: " + payload);
+    public void deleteNode(@RequestBody ObjectNode payload){
+
+        Node node = new Node(payload.get("address").asText());
+
+        if(nodeList.removeNode(node)){
+            logger.info("Removed node with publicKey: " + node);
         }else{
-            logger.info("Specified node does not exist: " + payload);
+            logger.info("Specified node does not exist: " + node);
         }
     }
 }

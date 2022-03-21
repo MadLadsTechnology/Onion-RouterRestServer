@@ -6,7 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,19 +14,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @SpringBootTest
 class NodeServerApiApplicationTests {
 	String JSON_DATA;
 	NodeList nodes = new NodeList();
 	@BeforeEach
-	public void startup() throws Exception {
+	public void startup() {
 	}
 
 	@Test
@@ -41,7 +39,7 @@ class NodeServerApiApplicationTests {
 
 		fillNodes();
 		ArrayList<Node> listOfAllNodes = nodes.getListOfAllNodes();
-		Assert.assertEquals(2, listOfAllNodes.size());
+		Assertions.assertEquals(2, listOfAllNodes.size());
 
 	}
 

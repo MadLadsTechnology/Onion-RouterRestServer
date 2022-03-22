@@ -6,12 +6,7 @@ import java.util.*;
 
 public class NodeList {
 
-    private ArrayList<Node> listOfAllNodes;
-    Logger logger = LoggerFactory.getLogger(NodeList.class);
-
-    public NodeList(ArrayList<Node> listOfAllNodes) {
-        this.listOfAllNodes = listOfAllNodes;
-    }
+    private final ArrayList<Node> listOfAllNodes;
 
     public NodeList() {
         listOfAllNodes = new ArrayList<>();

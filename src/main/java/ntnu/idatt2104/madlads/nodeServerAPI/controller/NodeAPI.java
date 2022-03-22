@@ -53,6 +53,7 @@ public class NodeAPI {
      * @param payload Takes in a JSON object as a payload
      */
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping ("/putNode")
     public boolean putNode(@RequestBody ObjectNode payload) {
 

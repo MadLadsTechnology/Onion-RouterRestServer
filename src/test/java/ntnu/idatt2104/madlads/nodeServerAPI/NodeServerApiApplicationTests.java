@@ -6,7 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ class NodeServerApiApplicationTests {
 	private void parseNodeObject(JSONObject node){
 		//Get node's public key
 		String host = (String) node.get("ip");
-		int port = Integer.parseInt(String.valueOf((long) node.get("port")));;
+		int port = Integer.parseInt(String.valueOf((long) node.get("port")));
 
 		nodes.addNode(new Node(port, host));
 	}

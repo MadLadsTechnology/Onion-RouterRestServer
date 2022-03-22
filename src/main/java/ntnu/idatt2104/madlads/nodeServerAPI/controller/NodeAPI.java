@@ -59,9 +59,9 @@ public class NodeAPI {
         Node node = new Node(payload.get("address").asText());
 
         if (nodeList.addNode(node)){
-            logger.info("Added node with address: " + node);
+            logger.info("ADDED node with address: " + node);
         }else{
-            logger.info("Node with address" + node +" already exists");
+            logger.info("Node with address" + node +" ALREADY exists");
         }
     }
 
@@ -77,9 +77,9 @@ public class NodeAPI {
         Node node = new Node(payload.get("address").asText());
 
         if(nodeList.removeNode(node)){
-            logger.info("Removed node with publicKey: " + node);
+            logger.info("REMOVED node with publicKey: " + node);
         }else{
-            logger.info("Specified node does not exist: " + node);
+            logger.info("Specified node does NOT exist: " + node);
         }
     }
     @CrossOrigin(origins = "http://localhost:8080")

@@ -18,6 +18,13 @@ public class NodeAPI {
     Logger logger = LoggerFactory.getLogger(NodeAPI.class);
     NodeList nodeList= new NodeList();
 
+    /**
+     * Method for returning all nodes as a JSON object
+     * Loops through the entire list of all nodes and adds their information to a Json object and then adds that to a JSOn array
+     * @return A Json Array with all the nodes
+     * @throws JSONException If we encounter a problem
+     */
+
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/getAllNodes", method= RequestMethod.GET)
     public String getAllNodes() throws JSONException {
@@ -41,20 +48,29 @@ public class NodeAPI {
         return mainObj.toString();
     }
 
+    /**
+     * Method for adding a node to the list of all node
+     * @param payload Takes in a JSON object as a payload
+     */
+
     @PostMapping ("/putNode")
     public boolean putNode(@RequestBody ObjectNode payload) {
 
         Node node = new Node(payload.get("address").asText());
 
         if (nodeList.addNode(node)){
-
-            logger.info("Added node with address: " + node);
+            logger.info("ADDED node with address: " + node);
             return true;
         }else{
-            logger.info("Node with address" + node +"Already exists");
+            logger.info("Node with address" + node +" ALREADY exists");
             return false;
         }
     }
+
+    /**
+     * Method for removing a node from the list
+     * @param payload The node as a json object
+     */
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/deleteNode", method=RequestMethod.DELETE)
@@ -63,11 +79,17 @@ public class NodeAPI {
         Node node = new Node(payload.get("address").asText());
 
         if(nodeList.removeNode(node)){
-            logger.info("Removed node with publicKey: " + node);
+            logger.info("REMOVED node with publicKey: " + node);
             return true;
         }else{
-            logger.info("Specified node does not exist: " + node);
+            logger.info("Specified node does NOT exist: " + node);
             return false;
         }
+    }
+    @CrossOrigin(origins = "http://localhost:8080")
+    @RequestMapping(value="/deleteAllNodes", method=RequestMethod.DELETE)
+    public void deleteAllNodes(){
+        nodeList.removeAllNodes();
+        logger.info("Removing all nodes");
     }
 }

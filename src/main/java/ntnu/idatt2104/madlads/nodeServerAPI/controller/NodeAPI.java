@@ -42,27 +42,32 @@ public class NodeAPI {
     }
 
     @PostMapping ("/putNode")
-    public void putNode(@RequestBody ObjectNode payload) {
+    public boolean putNode(@RequestBody ObjectNode payload) {
 
         Node node = new Node(payload.get("address").asText());
 
         if (nodeList.addNode(node)){
+
             logger.info("Added node with address: " + node);
+            return true;
         }else{
             logger.info("Node with address" + node +"Already exists");
+            return false;
         }
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
     @RequestMapping(value="/deleteNode", method=RequestMethod.DELETE)
-    public void deleteNode(@RequestBody ObjectNode payload){
+    public boolean deleteNode(@RequestBody ObjectNode payload){
 
         Node node = new Node(payload.get("address").asText());
 
         if(nodeList.removeNode(node)){
             logger.info("Removed node with publicKey: " + node);
+            return true;
         }else{
             logger.info("Specified node does not exist: " + node);
+            return false;
         }
     }
 }

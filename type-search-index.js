@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"ntnu.idatt2104.madlads.nodeServerAPI.model","l":"Node"},{"p":"ntnu.idatt2104.madlads.nodeServerAPI.controller","l":"NodeAPI"},{"p":"ntnu.idatt2104.madlads.nodeServerAPI.model","l":"NodeList"},{"p":"ntnu.idatt2104.madlads.nodeServerAPI","l":"NodeServerApiApplication"}];updateSearchResults();

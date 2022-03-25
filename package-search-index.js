@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ntnu.idatt2104.madlads.nodeServerAPI"},{"l":"ntnu.idatt2104.madlads.nodeServerAPI.controller"},{"l":"ntnu.idatt2104.madlads.nodeServerAPI.model"}];updateSearchResults();

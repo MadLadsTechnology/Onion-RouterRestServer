@@ -51,6 +51,7 @@ public class NodeAPI {
     /**
      * Method for adding a node to the list of all node
      * @param payload Takes in a JSON object as a payload
+     * @return return true if node is added, else if not
      */
 
     @CrossOrigin(origins = "http://localhost:8080")
@@ -71,6 +72,7 @@ public class NodeAPI {
     /**
      * Method for removing a node from the list
      * @param payload The node as a json object
+     * @return return true if node is removed, else if not
      */
 
     @CrossOrigin(origins = "http://localhost:8080")

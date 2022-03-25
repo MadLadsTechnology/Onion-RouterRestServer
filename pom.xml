@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ntnu.idatt2104.madlads</groupId>
-	<artifactId>nodeServerAPI</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>nodeServerAPI</name>
+	<artifactId>OnionServer</artifactId>
+	<version>1.1.0</version>
+	<name>OnionServer</name>
 	<description>Server for keeping track of all nodes</description>
 	<properties>
 		<java.version>16</java.version>

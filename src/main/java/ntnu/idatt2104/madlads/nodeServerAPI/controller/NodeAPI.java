@@ -80,7 +80,7 @@ public class NodeAPI {
         Node node = new Node(payload.get("address").asText());
 
         if(nodeList.removeNode(node)){
-            logger.info("REMOVED node with publicKey: " + node);
+            logger.info("REMOVED node with address: " + node);
             return true;
         }else{
             logger.info("Specified node does NOT exist: " + node);
